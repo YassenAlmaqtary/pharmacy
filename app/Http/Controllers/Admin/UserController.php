@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Console\DbCommand;
 use Illuminate\Http\Request;
@@ -52,7 +53,8 @@ class UserController extends Controller
                 DB::beginTransaction(); 
                 User::Create(['name'=>$request->name,
                 'email'=>$request->email,
-                'password'=>$request->password
+                'password'=>$request->password,
+                'statuse'=>$request->active
                 ]);  
                 DB::commit();
                 return redirect()->route('admin.users')->with(['success' => 'تم الحفظ بنجاح']);
@@ -85,7 +87,7 @@ class UserController extends Controller
         try{
            $users=User::select()->find($id); 
            if (!$users)
-                return redirect()->route('admin.users')->with(['error' => 'هذة اللغة غير موجودة']);
+                return redirect()->route('admin.users')->with(['error' => 'هذة القسم غير موجودة']);
                //$users = $users->makeVisible(['password']);
               // $users = $users->makeHidden(['name']);
            return view('admin.user.ubdate',compact('users'));
@@ -102,10 +104,31 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-         try{}catch(Exception $exp){
+         try{
+            $users=User::select()->find($id); 
+            
+            if (!$users)
+                return redirect()->route('admin.users')->with(['error' => 'هذة القسم غير موجودة']);
+            
+                if (!$request->has('active')) {
 
+                    $request->request->add(['active' => 0]);
+                } else {
+                    $request->request->add(['active' => 1]);
+                }  
+                User::where('id', $id)->update(['name'=>$request->name,
+                'email'=>$request->email,
+                'password'=>$request->password,
+                'statuse'=>$request->active,
+                'updated_at' => Carbon::now(),
+                ]);
+                return redirect()->route('admin.users')->with(['success' => 'تم الحفظ بنجاح']);
+
+
+         }catch(Exception $exp){
+            return  redirect()->route('admin.users')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
          }
 
        

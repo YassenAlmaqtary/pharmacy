@@ -50,6 +50,7 @@
                                           enctype="multipart/form-data">
                                           @method('put')
                                         @csrf
+                                        <input name="id" value="{{$users->id}}" type="hidden">
                                         <div class="form-group">                           
                                         <div class="form-body">
 
