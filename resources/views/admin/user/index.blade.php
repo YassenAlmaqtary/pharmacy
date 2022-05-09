@@ -6,13 +6,13 @@
     <div class="content-wrapper">
         <div class="content-header row">
             <div class="content-header-left col-md-6 col-12 mb-2">
-                <h3 class="content-header-title"> الاقسام الرئيسية </h3>
+                <h3 class="content-header-title">  جميع المستخدمين </h3>
                 <div class="row breadcrumbs-top">
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">الرئيسية</a>
                             </li>
-                            <li class="breadcrumb-item active"> الاقسام الرئيسية
+                            <li class="breadcrumb-item active"> المستخدمين
                             </li>
                         </ol>
                     </div>
@@ -26,7 +26,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">جميع الاقسام الرئيسية </h4>
+                                <h4 class="card-title">جميع المستخدمين </h4>
                                 <a class="heading-elements-toggle"><i
                                         class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
@@ -48,44 +48,44 @@
                                         class="table display nowrap table-striped table-bordered scroll-horizontal">
                                         <thead>
                                         <tr>
-                                            <th> القسم الفرعي </th>
-                                            <th>اللغة</th>
+                                            <th> الاسم </th>
+                                            <th>الايميل</th>
                                             <th>الحالة</th>
-                                            <th>صوره </th>
-                                            <th>الإجراءات</th>
                                         </tr>
                                         </thead>
                                         <tbody>
 
-                                            @isset($subcategories)
-                                            @foreach($subcategories as $category)  
+                                            @isset($users)
+                                            @foreach($users as $user)  
                                                 <tr>
-                                                    <td>{{$category->name}}</td>
-                                                    <td>{{$category->translation_lang}}</td>
-                                                    <td>{{$category->getActive()}}</td>
-                                                    <td><img style="width: 150px; height: 100px;" src="{{get_url_image($category->photo)}}"></td>
+                                                    <td>{{$user->name}}</td>
+                                                    <td>{{$user->email}}</td>
+                                                    <td>{{$user->getActive()}}
+                                                
                                                     <td>
                                                         <div class="btn-group" role="group"
                                                              aria-label="Basic example">
-                                                            <a href="{{route('admin.sub-cstegorys.edit',$category->id)}}" class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
+                                                            <a href="{{route('admin.users.edit',$user->id)}}" class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
 
 
                                                             <a href="" onclick="event.preventDefault();
                                                             document.getElementById('form').submit();" class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1"> حذف </a>
                                                               
-                                                            <form id="form" action="{{route('admin.cstegorys.delete',$category->id)}}" method="POST" class="d-none">
+                                                            <form id="form" action="{{route('admin.users.delete',$user->id)}}" method="POST" class="d-none">
                                                                 @method('delete')
                                                                 @csrf
                                                             </form>
-
+                                                    
                                                             <a href=""
                                                                 class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">
-                                                                 @if($category -> active == 0)
+                                                                 @if($user->active == 0)
                                                                      تفعيل
                                                                      @else
                                                                      الغاء تفعيل
                                                                  @endif
                                                             </a>
+                                                            
+                                                           
                                                         </div>
                                                     </td>
                                                 </tr>

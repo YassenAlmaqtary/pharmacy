@@ -12,7 +12,7 @@ Route::group(['namespace' => 'Admin','middleware' => 'auth:admin'], function () 
    Route::get('/', 'DashboardController@index')->name('admin.dashboard');
 
 
-   #################### start categrys  #################################
+#################### start categrys  #################################
 
 Route::group(['prefix' => 'categorys'], function () {
 
@@ -29,8 +29,33 @@ Route::group(['prefix' => 'categorys'], function () {
    ]);
 });
 
-
  #################### end categrys  #################################
+
+
+
+ #################### bigin vendor  #################################
+  Route::group(['prefix' => 'users'], function () {
+
+   Route::resource('user', 'UserController', [
+      'names' => [
+         'index' => 'admin.users',
+         'create' => 'admin.users.create',
+         'store' => 'admin.users.store',
+         'edit' => 'admin.users.edit',
+         'update' => 'admin.users.update',
+         'destroy' => 'admin.users.delete',
+      ]
+
+   ]);
+});
+
+#################### end vendor #################################
+
+
+
+
+
+
 
 
 

@@ -22,16 +22,16 @@
                 </ul>
             </li>
             <li class="nav-item"><a href=""><i class="la la-group"></i>
-                    <span class="menu-title" data-i18n="nav.dash.main">الاقسام الرئيسية  </span>
-                    {{-- <span
-                        class="badge badge badge-danger badge-pill float-right mr-2">{{App\Models\MainCategorie::where('translation_lang',get_defoult_langug())->count()}}</span>
-                </a> --}}
+                    <span class="menu-title" data-i18n="nav.dash.main">المستخدمين</span>
+                    <span
+                        class="badge badge badge-danger badge-pill float-right mr-2">{{App\Models\User::count()}}</span>
+                </a>
                 <ul class="menu-content">
-                    {{-- <li class="active"><a class="menu-item" href="{{route('admin.cstegorys')}}"
+                    <li class="active"><a class="menu-item" href="{{route('admin.users')}}"
                                           data-i18n="nav.dash.ecommerce"> عرض الكل </a>
                     </li>
-                    <li><a class="menu-item" href="{{route('admin.cstegorys.create')}}" data-i18n="nav.dash.crypto"> قسم جديد</a>
-                    </li> --}}
+                    <li><a class="menu-item" href="{{route('admin.users.create')}}" data-i18n="nav.dash.crypto"> مستخدم جديد</a>
+                    </li>
                 </ul>
             </li>
             {{-- <li class="nav-item"><a href=""><i class="la la-male"></i>

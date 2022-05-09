@@ -48,7 +48,7 @@
                                         class="table display nowrap table-striped table-bordered scroll-horizontal">
                                         <thead>
                                         <tr>
-                                            <th> القسم </th>
+                                            <th> الاسم </th>
                                             <th>الحالة</th>
                                             <th>صوره </th>
                                             <th>الوصف</th>
@@ -60,19 +60,17 @@
                                             @foreach($categories as $category)  
                                                 <tr>
                                                     <td>{{$category->name}}</td>
-                                                    <td>{{$category->translation_lang}}</td>
                                                     <td>{{$category->getActive()}}</td>
                                                     <td><img style="width: 150px; height: 100px;" src="{{get_url_image($category->photo)}}"></td>
+                                                   <td>{{$category->details}}</td>
                                                     <td>
                                                         <div class="btn-group" role="group"
                                                              aria-label="Basic example">
-                                                            <a href="{{route('admin.cstegorys.edit',$category->id)}}" class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
-
-
+                                                            <a href="{{route('admin.categorys.edit',$category->id)}}" class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
                                                             <a href="" onclick="event.preventDefault();
                                                             document.getElementById('form').submit();" class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1"> حذف </a>
                                                               
-                                                            <form id="form" action="{{route('admin.cstegorys.delete',$category->id)}}" method="POST" class="d-none">
+                                                            <form id="form" action="{{route('admin.categorys.delete',$category->id)}}" method="POST" class="d-none">
                                                                 @method('delete')
                                                                 @csrf
                                                             </form>
@@ -85,11 +83,7 @@
                                                                      الغاء تفعيل
                                                                  @endif
                                                             </a>
-                                                            <a href="{{route('admin.cstegorys.show',$category->id)}}"
-                                                               class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">
-                                                               الاقسام الفرعية      
-                                                            </a>
-                                                        
+  
                                                         </div>
                                                     </td>
                                                 </tr>

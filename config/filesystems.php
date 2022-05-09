@@ -42,6 +42,23 @@ return [
             'visibility' => 'public',
         ],
 
+        'categories' => [
+            'driver' => 'local',
+           'root' => public_path() . '/assets/admin/images/categories/', 
+           //'root' => base_path() . '/assets/admin/images/categories/',
+            'url' => env('APP_URL').'/public',
+             'visibility' => 'public',
+        ],
+
+
+        // 'users' => [
+        //     'driver' => 'local',
+        //    'root' => public_path() . '/assets/admin/images/users/', 
+        //    //'root' => base_path() . '/assets/admin/images/users/',
+        //     'url' => env('APP_URL').'/public',
+        //      'visibility' => 'public',
+        // ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -53,13 +70,6 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
 
-        'users' => [
-            'driver' => 'local',
-           'root' => public_path() . '/assets/admin/images/users/', 
-           //'root' => base_path() . '/assets/admin/images/users/',
-            'url' => env('APP_URL').'/public',
-             'visibility' => 'public',
-        ],
 
     ],
 

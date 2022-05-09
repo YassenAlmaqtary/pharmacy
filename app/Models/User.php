@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'statuse',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -31,8 +34,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'created_at',
+        'updated_at'
+         
     ];
-
+    protected $guarded = ['password'];
+    
     /**
      * The attributes that should be cast.
      *
@@ -41,4 +48,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getActive()
+    {
+        return $this->statuse == 1 ? 'مفعل'  : 'غير مفعل';
+    }
+    
+    public function scopeSelection($qury){
+
+        return $qury->select('id','name','email','password', 'statuse');
+
+}
+
+public function setPasswordAttribute($password)
+{
+    if (!empty($password)) {
+        $this->attributes['password'] = bcrypt($password);
+    }
+}
+
 }

@@ -15,6 +15,8 @@ class Category extends Model
         'id',
         'name',
         'details',
+        'photo',
+        'statuse',
         'created_at',
         'updated_at'
     ];
@@ -23,6 +25,27 @@ class Category extends Model
         'created_at','updatet_at'
     ];
     
+
+    public function getActive()
+    {
+
+        return $this->statuse == 1 ? 'مفعل'  : 'غير مفعل';
+    }
+    
+    public function scopeActive($qury)
+    {
+
+        return $qury->where('statuse', 1);
+    }
+    
+    public function scopeSelection($qury)
+    {
+        return $qury->select('id',  'name', 'photo', 'statuse');
+    }
+
+
+    
+
 
 
 }
