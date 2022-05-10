@@ -48,33 +48,27 @@
                                         <thead>
                                         <tr>
                                             <th> الاسم </th>
-                                            <th>الشعار</th>
-                                            <th>الهاتف</th>
-                                            <th>اسم الشركة</th>
-                                            <th>الحالة</th>
-                                            <th>القسم الرئيسي </th>
+                                            <th> الايميل </th>
+                                            <th>الحالة</th>      
                                             <th>الإجراءات</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                                 <tr>
                                                     <td>{{$vendors->name}}</td>
-                                                    <td><img style="width: 150px; height: 100px;" src="{{get_url_image($vendors->logo)}}"></td>
-                                                    <td>{{$vendors->mobile}}</td>
-                                                    <td>{{$vendors->company_name}}</td>
+                                                    <td>{{$vendors->email}}</td>
                                                     <td>{{$vendors->getActive()}}</td>
-                                                    <td>{{$vendors->category->name}}</td>
-                                                
+
                                                     <td>
                                                         <div class="btn-group" role="group"
                                                              aria-label="Basic example">
-                                                            <a href="{{route('vendor.vendors.edit',$vendors->id)}}" class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
+                                                            <a href="{{route('user.vendors.edit',$vendors->id)}}" class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
 
 
                                                             <a href="" onclick="event.preventDefault();
                                                             document.getElementById('form').submit();" class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1"> حذف </a>
                                                               
-                                                            <form id="form" action="{{route('vendor.vendors.delete',$vendors->id)}}" method="POST" class="d-none">
+                                                            <form id="form" action="{{route('user.vendors.delete',$vendors->id)}}" method="POST" class="d-none">
                                                                 @method('delete')
                                                                 @csrf
                                                             </form>
