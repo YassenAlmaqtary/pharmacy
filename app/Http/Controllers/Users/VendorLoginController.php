@@ -18,7 +18,7 @@ class VendorLoginController extends Controller
 
     public function getLogin(){
 
-        return view('admin.auth.login');
+        return view('user.auth.login');
   
       }
   
