@@ -120,7 +120,7 @@ class UserController extends Controller
                 }  
                 User::where('id', $id)->update(['name'=>$request->name,
                 'email'=>$request->email,
-                'password'=>$request->password,
+                'password'=>bcrypt($request->password),
                 'statuse'=>$request->active,
                 'updated_at' => Carbon::now(),
                 ]);

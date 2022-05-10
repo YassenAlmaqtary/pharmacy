@@ -38,7 +38,6 @@ class User extends Authenticatable
         'updated_at'
          
     ];
-    protected $guarded = ['password'];
     
     /**
      * The attributes that should be cast.
