@@ -59,17 +59,19 @@ class VendorController extends Controller
                 $request->request->add(['active' => 1]);
             
                 DB::beginTransaction(); 
-                User::Create(['name'=>$request->name,
+               $user= User::Create(['name'=>$request->name,
                 'email'=>$request->email,
                 'password'=>$request->password,
                 'statuse'=>$request->active
                 ]);  
                 DB::commit();
-                return redirect()->route('user.vendors')->with(['success' => 'تم الحفظ بنجاح']);
+                Auth::login($user);
+
+                 return redirect()->route('user.vendors')->with(['success' => 'تم الحفظ بنجاح']);
         }
         catch(Exception $exp){
             DB::rollBack();
-            return  redirect()->route('user.vendors')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+            return  redirect()->route('user.vendors.create')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
         }
     }
 
