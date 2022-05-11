@@ -17,7 +17,7 @@
                                           data-i18n="nav.dash.ecommerce"> عرض الكل </a>
                     </li>
                     <li><a class="menu-item" href="{{route('admin.categorys.create')}}" data-i18n="nav.dash.crypto">أضافة
-                            صنف جديد</a>
+                           اضافة الدواء</a>
                     </li>
                 </ul>
             </li>

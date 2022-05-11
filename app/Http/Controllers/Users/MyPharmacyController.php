@@ -1,37 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
-use App\Models\User;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
-class VendorController extends Controller
+class MyPharmacyController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-      
-    $this->middleware('auth')->except(['create','store']);
-
-    }
-
     public function index()
     {
-
-        $vendors = Auth::user();
-        
-        return view('user.vendors.index',compact('vendors'));
+        //
     }
-    
 
     /**
      * Show the form for creating a new resource.
@@ -40,7 +24,7 @@ class VendorController extends Controller
      */
     public function create()
     {
-        return view('user.vendors.create');
+        
     }
 
     /**
@@ -49,28 +33,9 @@ class VendorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
-        try{
-            if (!$request->has('active'))
-
-                $request->request->add(['active' => 0]);
-            else
-                $request->request->add(['active' => 1]);
-            
-                DB::beginTransaction(); 
-                User::Create(['name'=>$request->name,
-                'email'=>$request->email,
-                'password'=>$request->password,
-                'statuse'=>$request->active
-                ]);  
-                DB::commit();
-                return redirect()->route('user.vendors')->with(['success' => 'تم الحفظ بنجاح']);
-        }
-        catch(Exception $exp){
-            DB::rollBack();
-            return  redirect()->route('user.vendors')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-        }
+        
     }
 
     /**
