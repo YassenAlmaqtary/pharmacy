@@ -2,10 +2,14 @@
 
 @section('content')
 
-<@section('content')
-
 <div class="app-content content">
     <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                </div>
+            </div>
+        </div>
         <div class="content-body">
             <!-- Basic form layout section start -->
             <section id="basic-form-layouts">
@@ -13,7 +17,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title" id="basic-layout-form"> إضافة مستخدم </h4>
+                                <h4 class="card-title" id="basic-layout-form"> إضافة متجر </h4>
                                 <a class="heading-elements-toggle"><i
                                         class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
@@ -29,16 +33,26 @@
                             @include('user.includes.alerts.errors')
                             <div class="card-content collapse show">
                                 <div class="card-body">
-                                    <form class="form" action="{{route('user.vendors.store')}}"
+                                    <form class="form" action="{{route('vendor.vendors.store')}}"
                                           method="POST"
                                           enctype="multipart/form-data">
-                                        
+                                        <input type="hidden"  value="" id="latitude" name="latitude">
+                                        <input type="hidden" value="" id="longitude"  name="longitude">
                                         @csrf
                                         <div class="form-group">
-                                            
+                                            <label> شعار التجار </label>
+                                            <label id="projectinput7" class="file center-block">
+                                                <input type="file" id="file" name="logo">
+                                                <span class="file-custom"></span>
+                                            </label>
+                                            @error('logo')
+                                            <span class="text-danger">{{$message}}</span>
+                                            @enderror
+                                        </div>
+
                                         <div class="form-body">
 
-                                            <h4 class="form-section"><i class="ft-home"></i> بيانات المستخدم </h4>
+                                            <h4 class="form-section"><i class="ft-home"></i> بيانات المتجر </h4>
 
 
                                             <div class="row">
@@ -55,7 +69,40 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2"> أختر القسم </label>
+                                                        <select name="main_categorie_id" class="select2 form-control">
+                                                            <optgroup label="من فضلك أختر القسم ">
+                                                                @if($categories && $categories -> count() > 0)
+                                                                     @foreach($categories as $category)
+                                                                        <option
+                                                                            value="{{$category->id }}">{{$category->name}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </optgroup>
+                                                        </select>
+                                                        @error('main_categorie_id')
+                                                        <span class="text-danger"> {{$message}}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                             </div>
+
+
+                                            <div class="row">
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1"> رقم الهاتف </label>
+                                                        <input type="text" id="mobile"
+                                                               class="form-control"
+                                                               placeholder="  " name="mobile">
+
+                                                        @error("mobile")
+                                                        <span class="text-danger"> {{$message}}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-6 ">
                                                     <div class="form-group">
                                                         <label for="projectinput1"> ألبريد الالكتروني </label>
@@ -88,12 +135,38 @@
 
                                                 </div>
 
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1"> اسم الشركة </label>
+                                                        <input type="text" id="company_name"
+                                                               class="form-control"
+                                                               placeholder="  " name="company_name">
 
+                                                        @error("company_name")
+                                                        <span class="text-danger"> {{$message}}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
 
                                             </div>
-                                           
+
+
+                                            <div class="row">
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1"> العنوان  </label>
+                                                        <input type="text" id="pac-input"
+                                                               class="form-control"
+                                                               placeholder="  " name="address">
+
+                                                        @error("address")
+                                                        <span class="text-danger"> {{$message}}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
                                             </div>
-                                            {{-- <div class="row">
+                                          {{--  <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group mt-1">
                                                         <input type="checkbox" value="1"
@@ -109,9 +182,10 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                            </div> --}}
+                                            </div>--}}
 
                                         </div>
+                                        <div id="map" style="height: 500px;width: 1000px;"></div>
 
                                         <div class="form-actions">
                                             <button type="button" class="btn btn-warning mr-1"
@@ -135,3 +209,7 @@
 </div>
 
 @endsection
+
+
+
+   

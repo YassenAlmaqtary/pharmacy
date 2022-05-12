@@ -50,7 +50,6 @@
                                             <th> الاسم </th>
                                             <th> الايميل </th>
                                             <th>الحالة</th>      
-                                            <th>الإجراءات</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -72,11 +71,6 @@
                                                                 @method('delete')
                                                                 @csrf
                                                             </form>
-
-                                                            <a href="#"
-                                                                class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">
-                                                                الاقسام الفرعية      
-                                                            </a>     
 
                                                           {{-- <a href=""
                                                                 class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">

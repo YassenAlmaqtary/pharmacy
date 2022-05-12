@@ -14,7 +14,7 @@ class MyPharmacyController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
