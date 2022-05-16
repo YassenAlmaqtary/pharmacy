@@ -33,116 +33,133 @@
                             @include('user.includes.alerts.errors')
                             <div class="card-content collapse show">
                                 <div class="card-body">
-                                    <form class="form" action="{{route('vendor.vendors.store')}}"
+                                    <form class="form" action="{{route('user.medication.store')}}"
                                           method="POST"
                                           enctype="multipart/form-data">
-                                        <input type="hidden"  value="" id="latitude" name="latitude">
-                                        <input type="hidden" value="" id="longitude"  name="longitude">
                                         @csrf
                                         <div class="form-group">
-                                            <label> شعار التجار </label>
+                                            <label> شعار الدواء </label>
                                             <label id="projectinput7" class="file center-block">
-                                                <input type="file" id="file" name="logo">
+                                                <input type="file" id="file" name="photo">
                                                 <span class="file-custom"></span>
                                             </label>
-                                            @error('logo')
+                                            @error('photo')
                                             <span class="text-danger">{{$message}}</span>
                                             @enderror
                                         </div>
 
                                         <div class="form-body">
 
-                                            <h4 class="form-section"><i class="ft-home"></i> بيانات المتجر </h4>
-
+                                            <h4 class="form-section"><i class="ft-home"></i> بيانات الدواء </h4>
 
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput1"> الاسم </label>
-                                                        <input type="text" value="" id="name"
+                                                        <label for="projectinput1"> الاسم التجاري </label>
+                                                        <input type="text" value="" id="trade_name"
                                                                class="form-control"
-                                                               placeholder="  "
-                                                               name="name">
-                                                        @error("name")
+                                                               placeholder=" "
+                                                               name="trade_name ">
+                                                        @error("trade_name")
                                                         <span class="text-danger">{{$message}}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
 
+                                            
+                                            </div>
+
+                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput2"> أختر القسم </label>
-                                                        <select name="main_categorie_id" class="select2 form-control">
-                                                            <optgroup label="من فضلك أختر القسم ">
-                                                                @if($categories && $categories -> count() > 0)
-                                                                     @foreach($categories as $category)
+                                                        <label for="projectinput1"> الاسم العلمي </label>
+                                                        <input type="text" value="" id="scientific_name"
+                                                               class="form-control"
+                                                               placeholder=" "
+                                                               name="scientific_name">
+                                                        @error("scientific_name")
+                                                        <span class="text-danger">{{$message}}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+                                            
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1">البلد المصنع </label>
+                                                        <input type="text" id="made_in"
+                                                               class="form-control"
+                                                               placeholder="  " name="made_in ">
+
+                                                        @error("made_in")
+                                                        <span class="text-danger"> {{$message}}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1">الكمية</label>
+                                                        <input type="text" id="quntity"
+                                                               class="form-control"
+                                                               placeholder="" name="quntity">
+
+                                                        @error("quntity")
+                                                        <span class="text-danger"> {{$message}}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2"> أختر القسم  </label>
+                                                        <select name="categories_id" class="select2 form-control">
+                                                            <optgroup label=" من فضلك أختر القسم ">
+                                                                @if($catgorys && $catgorys-> count() > 0)
+                                                                    @foreach($catgorys as $catgory)
                                                                         <option
-                                                                            value="{{$category->id }}">{{$category->name}}</option>
+                                                                            value="{{$catgory->id }}">{{$catgory->name}}</option>
                                                                     @endforeach
                                                                 @endif
                                                             </optgroup>
                                                         </select>
-                                                        @error('main_categorie_id')
+                                                        @error('categories_id')
                                                         <span class="text-danger"> {{$message}}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
+    
+    
                                             </div>
 
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1"> تاريخ الانتاج  </label>
+                                                        <input type="date" id="date"
+                                                               class="form-control"
+                                                               placeholder="  " name="production_date">
+
+                                                        @error("production_date")
+                                                        <span class="text-danger"> {{$message}}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+                                            </div>
 
                                             <div class="row">
                                                 <div class="col-md-6 ">
                                                     <div class="form-group">
-                                                        <label for="projectinput1"> رقم الهاتف </label>
-                                                        <input type="text" id="mobile"
+                                                        <label for="projectinput1">تاريخ الانتهاء</label>
+                                                        <input type="date" id="expiry_date"
                                                                class="form-control"
-                                                               placeholder="  " name="mobile">
+                                                               placeholder="  " name="expiry_date">
 
-                                                        @error("mobile")
-                                                        <span class="text-danger"> {{$message}}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 ">
-                                                    <div class="form-group">
-                                                        <label for="projectinput1"> ألبريد الالكتروني </label>
-                                                        <input type="text" id="email"
-                                                               class="form-control"
-                                                               placeholder="  " name="email">
-
-                                                        @error("email")
-                                                        <span class="text-danger"> {{$message}}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-
-
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput1">كلمة المرور  </label>
-                                                            <input type="password" id="password"
-                                                                   class="form-control"
-                                                                   placeholder="  " name="password">
-
-                                                            @error("password")
-                                                            <span class="text-danger"> {{$message}}</span>
-                                                            @enderror
-                                                        </div>
-
-                                                </div>
-
-                                                <div class="col-md-6 ">
-                                                    <div class="form-group">
-                                                        <label for="projectinput1"> اسم الشركة </label>
-                                                        <input type="text" id="company_name"
-                                                               class="form-control"
-                                                               placeholder="  " name="company_name">
-
-                                                        @error("company_name")
+                                                        @error("expiry_date")
                                                         <span class="text-danger"> {{$message}}</span>
                                                         @enderror
                                                     </div>
@@ -150,23 +167,11 @@
 
                                             </div>
 
-
-                                            <div class="row">
-                                                <div class="col-md-6 ">
-                                                    <div class="form-group">
-                                                        <label for="projectinput1"> العنوان  </label>
-                                                        <input type="text" id="pac-input"
-                                                               class="form-control"
-                                                               placeholder="  " name="address">
-
-                                                        @error("address")
-                                                        <span class="text-danger"> {{$message}}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
                                             </div>
-                                          {{--  <div class="row">
+
+
+                                            
+                                           <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group mt-1">
                                                         <input type="checkbox" value="1"
@@ -182,10 +187,10 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                            </div>--}}
+                                            </div>
 
                                         </div>
-                                        <div id="map" style="height: 500px;width: 1000px;"></div>
+                                        
 
                                         <div class="form-actions">
                                             <button type="button" class="btn btn-warning mr-1"

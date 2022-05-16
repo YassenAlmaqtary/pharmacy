@@ -3,49 +3,37 @@
 <div class="main-menu menu-fixed menu-light menu-accordion    menu-shadow " data-scroll-to-active="true">
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="nav-item active"><a href="{{route('admin.dashboard')}}"><i class="la la-mouse-pointer"></i><span
+            <li class="nav-item active"><a href="{{route('user.vendors')}}"><i class="la la-mouse-pointer"></i><span
                         class="menu-title" data-i18n="nav.add_on_drag_drop.main">الرئيسية </span></a>
             </li>
             <li class="nav-item">
                    <a href=""><i class="la la-home"></i>
-                    <span class="menu-title" data-i18n="nav.dash.main">الاصناف </span>
+                    <span class="menu-title" data-i18n="nav.dash.main">الصيدلية </span>
                     <span
-                        class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Category::count()}}</span>
+                        class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\MyPharmacy::count()}}</span>
                 </a> 
                 <ul class="menu-content">
-                    <li class="active"><a class="menu-item" href="{{route('admin.categorys')}}"
+                    <li class="active"><a class="menu-item" href="{{route('user.pharmacy')}}"
                                           data-i18n="nav.dash.ecommerce"> عرض الكل </a>
                     </li>
-                    <li><a class="menu-item" href="{{route('admin.categorys.create')}}" data-i18n="nav.dash.crypto">أضافة
-                           اضافة الدواء</a>
+                    <li><a class="menu-item" href="{{route('user.pharmacy.create')}}" data-i18n="nav.dash.crypto">
+                           اضافة صيدلية</a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-item"><a href=""><i class="la la-group"></i>
-                    <span class="menu-title" data-i18n="nav.dash.main">المستخدمين</span>
-                    <span
-                        class="badge badge badge-danger badge-pill float-right mr-2">{{App\Models\User::count()}}</span>
-                </a>
-                <ul class="menu-content">
-                    <li class="active"><a class="menu-item" href="{{route('admin.users')}}"
-                                          data-i18n="nav.dash.ecommerce"> عرض الكل </a>
-                    </li>
-                    <li><a class="menu-item" href="{{route('admin.users.create')}}" data-i18n="nav.dash.crypto"> مستخدم جديد</a>
-                    </li>
-                </ul>
-            </li>
-            {{-- <li class="nav-item"><a href=""><i class="la la-male"></i>
-              <span class="menu-title" data-i18n="nav.dash.main">الاقسام الفرعية  </span>
+       
+            <li class="nav-item"><a href=""><i class="la la-male"></i>
+              <span class="menu-title" data-i18n="nav.dash.main">الادوية</span>
               <span
-                  class="badge badge badge-warning  badge-pill float-right mr-2">{{App\Models\SubCategorie::where('translation_lang',get_defoult_langug())->count()}}</span>
+                  class="badge badge badge-warning  badge-pill float-right mr-2">{{--{{App\Models\SubCategorie::where('translation_lang',get_defoult_langug())->count()}}--}}</span>
           </a>
           <ul class="menu-content">
-              <li class="active"><a class="menu-item" href="{{route('admin.sub-cstegorys')}}"
-                                    data-i18n="nav.dash.ecommerce"> عرض الكل </a>
+              <li class="active"><a class="menu-item" href="{{route('user.medication')}}"
+                                    data-i18n="nav.dash.ecommerce"> عرض ادويتي </a>
               </li>
-              <li><a class="menu-item" href="{{route('admin.sub-cstegorys.create')}}" data-i18n="nav.dash.crypto">أضافة
-                      قسم فرعي </a>
-              </li> --}}
+              <li><a class="menu-item" href="{{route('user.medication.create')}}" data-i18n="nav.dash.crypto">أضافة
+                  دواء </a>
+              </li>
           </ul>
       </li>
 

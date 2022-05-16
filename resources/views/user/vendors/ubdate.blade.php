@@ -91,7 +91,7 @@
 
                                            
                                             </div>
-                                            <div class="row">
+                                            {{-- <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group mt-1">
                                                         <input type="checkbox" value="1"
@@ -107,7 +107,7 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                         </div>
 

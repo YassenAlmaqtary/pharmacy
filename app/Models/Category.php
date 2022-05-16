@@ -25,6 +25,7 @@ class Category extends Model
         'created_at','updatet_at'
     ];
     
+    
 
     public function getActive()
     {

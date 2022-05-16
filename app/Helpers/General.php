@@ -29,6 +29,13 @@ function uploadImage($folder, $image)
     return $path;
 }
 
+function uploadpdf($folder,$pdf){  
+   $pdf->store('/',$folder) ;
+  $name=$pdf->hashName();;
+  $path ='/assets/admin/pdf/'. $folder . '/' . $name; 
+   return $path;
+}
+
 
 function uploadMultiImage($folder,$images)
 {
@@ -49,6 +56,13 @@ function removeImage($path){
 
 }
 
+function removepdf($path){
+   //if(file_exists(base_path().$path))
+   if(file_exists(public_path().$path))
+   //unlink(base_path().$path);
+    unlink(public_path().$path);
+ 
+ }
 
 function removeMultiImage($paths){
 
@@ -63,12 +77,15 @@ function removeMultiImage($paths){
 
 }
  
-
-
  function get_url_image($value){
    
   return ($value!=null)?asset($value):"";
 } 
+
+function get_url_pdf($value){
+   
+   return ($value!=null)?asset($value):"";
+ } 
 
 
 function nullSercheValueincollect($array,$value){

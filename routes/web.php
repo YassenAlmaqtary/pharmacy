@@ -56,6 +56,36 @@ Route::group(['namespace' => 'Users'], function () {
          ] 
        ]);
        //##################### end user-auth ######################
+       
+        //##################### bagin pharmcy ######################
+       Route::resource('pharmacy', 'MyPharmacyController', [
+        'names' => [
+          'index' => 'user.pharmacy',
+           'create' => 'user.pharmacy.create',
+           'store' => 'user.pharmacy.store',
+           'edit' => 'user.pharmacy.edit',
+           'update' => 'user.pharmacy.update',
+           'destroy' => 'user.pharmacy.delete',       
+           ] 
+         ]);
+             
+        //##################### end pharmcy ######################
+
+
+        //##################### bagin medication ######################
+       Route::resource('medication', 'MedicationController', [
+          'names' => [
+          'index' => 'user.medication',
+           'create' => 'user.medication.create',
+           'store' => 'user.medication.store',
+           'edit' => 'user.medication.edit',
+           'update' => 'user.medication.update',
+           'destroy' => 'user.medication.delete',       
+           ] 
+         ]);
+             
+        //##################### end medication ######################
+
     
  });
 

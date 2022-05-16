@@ -47,6 +47,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function scopeActive($qury)
+    {
+
+        return $qury->where('statuse', 1);
+    }
+
 
     public function getActive()
     {
@@ -65,5 +71,9 @@ public function setPasswordAttribute($password)
         $this->attributes['password'] = bcrypt($password);
     }
 }
+
+public function pharmacys(){
+    return $this->hasMany(MyPharmacy::class,'user_id','id');
+  }
 
 }

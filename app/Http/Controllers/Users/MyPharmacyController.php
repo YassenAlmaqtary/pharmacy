@@ -1,12 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ParnacyRequest;
+use App\Models\MyPharmacy;
+use Carbon\Carbon;
+use Doctrine\DBAL\Schema\View;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MyPharmacyController extends Controller
 {
+    public function __construct()
+    {
+      
+    $this->middleware('auth');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +27,9 @@ class MyPharmacyController extends Controller
      */
     public function index()
     {
+        $pharamcys=MyPharmacy::where(['user_id'=>Auth::user()->id])->selection()->get();
         
+       return view('user.pharmacy.index',compact('pharamcys'));
     }
 
     /**
@@ -24,7 +39,7 @@ class MyPharmacyController extends Controller
      */
     public function create()
     {
-        
+      return view('user.pharmacy.create');   
     }
 
     /**
@@ -33,8 +48,54 @@ class MyPharmacyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(ParnacyRequest $request)
+    {  
+        try{
+        
+             //return  time().'.'.$request->pdf->extension();
+             $filePath="";
+             $pdfPath="";
+
+            if ($request->has('photo')) {
+                $filePath = uploadImage('users', $request->photo);
+            }
+            if ($request->has('pdf')) {
+                $pdfPath = uploadPdf('cves', $request->pdf);
+            
+            }
+            // if (!$request->has('active'))
+
+            //     $request->request->add(['active' => 0]);
+            // else
+            //     $request->request->add(['active' => 1]);
+
+            DB::beginTransaction();
+           
+           MyPharmacy::insert(
+            [
+                'name' => $request->name,
+                'statuse' => $request->active,
+                'photo' => $filePath,
+                'pdf_path'=>$pdfPath,
+                'mobile1'=>$request->mobile1,
+                'mobile2'=>$request->mobile2,
+                'social_media'=>$request->social,
+                'address'=>$request->address,
+                'user_id'=>Auth::user()->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
+        );
+        DB::commit();
+            return  redirect()->route('user.pharmacy')->with(['success' => 'تم الحفظ بنجاح']);
+        } catch (Exception $exp) {
+            DB::rollBack();
+            removepdf($pdfPath);
+            removeImage($filePath);
+            return  redirect()->route('user.pharmacy')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        
+
+        }
         
     }
 
@@ -46,7 +107,7 @@ class MyPharmacyController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -57,7 +118,19 @@ class MyPharmacyController extends Controller
      */
     public function edit($id)
     {
-        //
+        try{
+            $pharmacy=MyPharmacy::find($id);
+            
+            if (!$pharmacy){
+                 return redirect()->route('user.pharmacy')->with(['error' => 'هذة القسم غير موجودة']);
+            }    
+                
+                 return view('user.pharmacy.ubdate',compact('pharmacy')); 
+        }
+        catch(Exception $exp){
+            return  redirect()->route('user.pharmacy')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+
+        }
     }
 
     /**
@@ -67,9 +140,48 @@ class MyPharmacyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(ParnacyRequest $request, $id)
+     { 
+    try {
+        $pharmacy = MyPharmacy::select()->find($id);
+        if (!$pharmacy) {
+            return redirect()->route('user.pharmacy')->with(['error' => 'هذة القسم غير موجودة']);
+        }
+        // if (!$request->has('active')) {
+
+        //     $request->request->add(['active' => 0]);
+        // } else {
+        //     $request->request->add(['active' => 1]);
+        // }
+
+        $filePath = $pharmacy->photo;
+        if ($request->has('photo')) {
+            removeImage($filePath);
+            $filePath = uploadImage('categories', $request->photo);
+        }
+        $pdfPath = $pharmacy->pdf_path;
+        if ($request->has('pdf')) {
+            removepdf($pdfPath);
+            $pdfPath = uploadpdf('cves', $request->pdf);
+        }
+        
+        MyPharmacy::where('id', $id)->update([
+            'name' => $request->name,
+            'photo' => $filePath,
+            'pdf_path'=>$pdfPath,
+            'mobile1'=>$request->mobile1,
+            'mobile2'=>$request->mobile2,
+            'social_media'=>$request->social,
+            'address'=>$request->address,
+            'updated_at' => Carbon::now(),
+        ]);
+        return  redirect()->route('user.pharmacy')->with(['success' => 'تم التحديث بنجاح']);
+
+    } catch (Exception $exp) {
+
+        return  redirect()->route('user.pharmacy')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+    }
+        
     }
 
     /**

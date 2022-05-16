@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Mypharmacy extends Model
+class MyPharmacy extends Model
 {
     use HasFactory;
 
@@ -15,12 +15,43 @@ class Mypharmacy extends Model
         'id',
         'name',
         'social_media',
+        'address',
+        'photo',
+         'pdf_path',
+         'mobile1',
+         'mobile2',
+         'user_id',
+         'statuse',
         'created_at',
         'updated_at'
     ];
 
     protected $hidden = [
-        'created_at','updatet_at'
+        'created_at','updatet_at','user_id'
     ];
+    public function scopeActive($qury)
+    {
+
+        return $qury->where('statuse', 1);
+    }
+
+
+    public function scopeSelection($qury)
+    {
+        return $qury->select('id','name','photo','social_media','address','pdf_path','mobile1','mobile2','user_id','statuse');
+    }
+
+    public function getActive()
+    {
+
+        return $this->statuse == 1 ? 'مفعل'  : 'غير مفعل';
+    }
+    
+
+
+    public function user(){
+        return $this->belongsTo(User::class,'user_id','id');
+      }
+    
 
 }

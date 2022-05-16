@@ -49,15 +49,32 @@ return [
             'url' => env('APP_URL').'/public',
              'visibility' => 'public',
         ],
+        'cves' => [
+            'driver' => 'local',
+           'root' => public_path() . '/assets/admin/pdf/cves/', 
+           //'root' => base_path() . '/assets/admin/pdf/cves/',
+            'url' => env('APP_URL').'/public',
+             'visibility' => 'public',
+        ],
 
 
-        // 'users' => [
-        //     'driver' => 'local',
-        //    'root' => public_path() . '/assets/admin/images/users/', 
-        //    //'root' => base_path() . '/assets/admin/images/users/',
-        //     'url' => env('APP_URL').'/public',
-        //      'visibility' => 'public',
-        // ],
+        'users' => [
+            'driver' => 'local',
+           'root' => public_path() . '/assets/admin/images/users/', 
+           //'root' => base_path() . '/assets/admin/images/users/'
+            'url' => env('APP_URL').'/public',
+             'visibility' => 'public',
+        ],
+
+
+        
+        'medications' => [
+            'driver' => 'local',
+           'root' => public_path() . '/assets/admin/images/medications/', 
+           //'root' => base_path() . '/assets/admin/images/medications/'
+            'url' => env('APP_URL').'/public',
+             'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',
