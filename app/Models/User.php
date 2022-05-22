@@ -76,4 +76,6 @@ public function pharmacys(){
     return $this->hasMany(MyPharmacy::class,'user_id','id');
   }
 
+  
+
 }

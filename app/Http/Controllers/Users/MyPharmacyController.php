@@ -74,7 +74,7 @@ class MyPharmacyController extends Controller
            MyPharmacy::insert(
             [
                 'name' => $request->name,
-                'statuse' => $request->active,
+               // 'statuse' => $request->active,
                 'photo' => $filePath,
                 'pdf_path'=>$pdfPath,
                 'mobile1'=>$request->mobile1,
@@ -90,7 +90,7 @@ class MyPharmacyController extends Controller
             return  redirect()->route('user.pharmacy')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $exp) {
             DB::rollBack();
-            removepdf($pdfPath);
+          removepdf($pdfPath);
             removeImage($filePath);
             return  redirect()->route('user.pharmacy')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
         
@@ -107,6 +107,7 @@ class MyPharmacyController extends Controller
      */
     public function show($id)
     {
+        
         
     }
 

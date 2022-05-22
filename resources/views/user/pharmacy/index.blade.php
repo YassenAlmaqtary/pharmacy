@@ -25,7 +25,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">بيانات حسابي</h4>
+                                <h4 class="card-title">بيانات الصيدلية</h4>
                                 <a class="heading-elements-toggle"><i
                                         class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
@@ -86,10 +86,10 @@
                                                                 @csrf
                                                             </form>
 
-                                                            <a href="#"
+                                                            {{-- <a href="{{route('user.pharmacy.show',$pharamcy->id)}}"
                                                                 class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">
-                                                                الاقسام الفرعية      
-                                                            </a>     
+                                                                عرض الادوية      
+                                                            </a>      --}}
 
                                                           {{-- <a href=""
                                                                 class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">

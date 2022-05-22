@@ -31,6 +31,11 @@ Route:/*
 //  require __DIR__.'/auth.php';
 ################################# Auth User ###############################
 
+////test email/////
+
+//Route::get('send-mail','Email\TestEmailController@sendEmail');
+
+
 
 Route::group(['namespace' => 'Users'], function () {
 
@@ -52,7 +57,6 @@ Route::group(['namespace' => 'Users'], function () {
          'edit' => 'user.vendors.edit',
          'update' => 'user.vendors.update',
          'destroy' => 'user.vendors.delete',
-     
          ] 
        ]);
        //##################### end user-auth ######################
@@ -65,6 +69,7 @@ Route::group(['namespace' => 'Users'], function () {
            'store' => 'user.pharmacy.store',
            'edit' => 'user.pharmacy.edit',
            'update' => 'user.pharmacy.update',
+           'show'=>'user.pharmacy.show',
            'destroy' => 'user.pharmacy.delete',       
            ] 
          ]);

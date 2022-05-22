@@ -29,7 +29,6 @@ class VendorController extends Controller
     {
 
         $vendors = Auth::user();
-        
         return view('user.vendors.index',compact('vendors'));
     }
     

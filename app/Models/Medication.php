@@ -14,14 +14,11 @@ class Medication extends Model
         'id',
         'trade_name',
         'scientific_name',
-        'made_in ',
-        'quntity',
+        'made_in',
         'photo',
         'user_id',
-        'categorie_id ',
-        'production_date ',
-         'expiry_date',
-         'active',
+        'categorie_id',
+        'active',
         'created_at',
         'updated_at'
     ];
@@ -33,21 +30,28 @@ class Medication extends Model
     public function getActive()
     {
 
-        return $this->active == 1 ? 'متوفر'  : 'غير متوفر';
+        return $this->active == 1 ? ' مفعل'  : 'غير مفعل';
     }
 
     public function scopeActive($qury)
     {
-
         return $qury->where('active', 1);
     }
     
     public function scopeSelection($qury)
     {
-        return $qury->select('id',  'trade_name','scientific_name', 'made_in ','quntity','photo','production_date ','expiry_date');
+        return $qury->select('id','trade_name','scientific_name', 'made_in','photo');
+    }
+     
+    public function user(){
+        return $this->belongsTo(User::class,'user_id','id');
+      }
+
+    public function Pharmacys(){
+        return $this->belongsToMany(MyPharmacy::class,'medication_mypharmacys','medication_id','id');
     }
 
-
+    
 
 
 }

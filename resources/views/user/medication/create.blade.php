@@ -17,7 +17,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title" id="basic-layout-form"> إضافة متجر </h4>
+                                <h4 class="card-title" id="basic-layout-form"> إضافة دواء </h4>
                                 <a class="heading-elements-toggle"><i
                                         class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
@@ -59,46 +59,44 @@
                                                         <input type="text" value="" id="trade_name"
                                                                class="form-control"
                                                                placeholder=" "
-                                                               name="trade_name ">
+                                                               name="trade_name">
                                                         @error("trade_name")
                                                         <span class="text-danger">{{$message}}</span>
                                                         @enderror
                                                     </div>
-                                                </div>
+                                                </div>   
 
-                                            
-                                            </div>
-
-                                            <div class="row">
                                                 <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="projectinput1"> الاسم العلمي </label>
-                                                        <input type="text" value="" id="scientific_name"
-                                                               class="form-control"
-                                                               placeholder=" "
-                                                               name="scientific_name">
-                                                        @error("scientific_name")
-                                                        <span class="text-danger">{{$message}}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
+                                                        <div class="form-group">
+                                                            <label for="projectinput1"> الاسم العلمي </label>
+                                                            <input type="text" value="" id="scientific_name"
+                                                                   class="form-control"
+                                                                   placeholder=" "
+                                                                   name="scientific_name">
+                                                            @error("scientific_name")
+                                                            <span class="text-danger">{{$message}}</span>
+                                                            @enderror
+                                                        </div>
+                                                 </div>
+                                            
 
                                             
                                             </div>
 
+                                            
+
 
                                             <div class="row">
-                                                <div class="col-md-6 ">
-                                                    <div class="form-group">
-                                                        <label for="projectinput1">البلد المصنع </label>
-                                                        <input type="text" id="made_in"
-                                                               class="form-control"
-                                                               placeholder="  " name="made_in ">
-
-                                                        @error("made_in")
-                                                        <span class="text-danger"> {{$message}}</span>
-                                                        @enderror
-                                                    </div>
+                                                <div class="form-group">
+                                                    <label for="projectinput1">البلد المصنع</label>
+                                                    <input type="text" value="" id="made_in"
+                                                           class="form-control"
+                                                           placeholder=" "
+                                                           name="made_in">
+                                                    @error("made_in")
+                                                    <span class="text-danger">{{$message}}</span>
+                                                    @enderror
+                                                </div>
                                                 </div>
 
                                                 <div class="col-md-6 ">
@@ -109,6 +107,18 @@
                                                                placeholder="" name="quntity">
 
                                                         @error("quntity")
+                                                        <span class="text-danger"> {{$message}}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1">السعر</label>
+                                                        <input type="text" id="price"
+                                                               class="form-control"
+                                                               placeholder="" name="price">
+
+                                                        @error("price")
                                                         <span class="text-danger"> {{$message}}</span>
                                                         @enderror
                                                     </div>
@@ -132,14 +142,17 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-    
-    
-                                            </div>
 
+
+
+                                            </div>
+ 
+
+                                            <div class="row">
                                                 <div class="col-md-6 ">
                                                     <div class="form-group">
                                                         <label for="projectinput1"> تاريخ الانتاج  </label>
-                                                        <input type="date" id="date"
+                                                        <input type="date" id="production_date"
                                                                class="form-control"
                                                                placeholder="  " name="production_date">
 
@@ -148,10 +161,6 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-
-                                            </div>
-
-                                            <div class="row">
                                                 <div class="col-md-6 ">
                                                     <div class="form-group">
                                                         <label for="projectinput1">تاريخ الانتهاء</label>
@@ -165,31 +174,48 @@
                                                     </div>
                                                 </div>
 
-                                            </div>
+                                            </div>                                        
 
-                                            </div>
-
-
-                                            
                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group mt-1">
-                                                        <input type="checkbox" value="1"
-                                                               name="active"
-                                                               id="switcheryColor4"
-                                                               class="switchery" data-color="success"
-                                                               checked/>
-                                                        <label for="switcheryColor4"
-                                                               class="card-title ml-1">الحالة </label>
+                                            <div class="col-md-6">
+                                                <div class="form-group mt-1">
+                                                    <input type="checkbox" value="1"
+                                                           name="active"
+                                                           id="switcheryColor4"
+                                                           class="switchery" data-color="success"
+                                                           checked/>
+                                                    <label for="switcheryColor4"
+                                                           class="card-title ml-1">الحالة </label>
 
-                                                        @error("active")
-                                                        <span class="text-danger"> </span>
-                                                        @enderror
-                                                    </div>
+                                                    @error("active")
+                                                    <span class="text-danger"> </span>
+                                                    @enderror
+                                                </div>
+                                            
+                                         </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="projectinput2"> أختر الصيدلية  </label>
+                                                    <select name="mypharmacy_id" class="select2 form-control">
+                                                        <optgroup label=" من فضلك أختر الصيدلية ">
+                                                            @if($mypharmacys && $mypharmacys-> count() > 0)
+                                                                @foreach($mypharmacys as $mypharmacy)
+                                                                    <option
+                                                                        value="{{$mypharmacy->id }}">{{$mypharmacy->name}}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </optgroup>
+                                                    </select>
+                                                    @error('mypharmacy_id')
+                                                    <span class="text-danger"> {{$message}}</span>
+                                                    @enderror
                                                 </div>
                                             </div>
 
-                                        </div>
+                                           
+                                           </div>
+                                              
+                                         
                                         
 
                                         <div class="form-actions">
