@@ -43,6 +43,9 @@ class Category extends Model
     {
         return $qury->select('id',  'name', 'photo', 'statuse');
     }
+    public function medications(){
+        return $this->hasMany(MedicationMypharmacy::class,'categorie_id','id');
+      }
 
 
     

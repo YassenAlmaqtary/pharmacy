@@ -78,6 +78,8 @@ Route::group(['namespace' => 'Users'], function () {
 
 
         //##################### bagin medication ######################
+       Route::get('medication/create_exists','MedicationController@createExste')->name('user.medication.crete.exists');  
+       Route::post('medication/store_exists','MedicationController@storeExists')->name('user.medication.store.exists'); 
        Route::resource('medication', 'MedicationController', [
           'names' => [
           'index' => 'user.medication',

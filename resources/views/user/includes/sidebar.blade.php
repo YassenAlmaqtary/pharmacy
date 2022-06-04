@@ -32,8 +32,11 @@
                                     data-i18n="nav.dash.ecommerce"> عرض ادويتي </a>
               </li>
               <li><a class="menu-item" href="{{route('user.medication.create')}}" data-i18n="nav.dash.crypto">أضافة
-                  دواء </a>
+              دواء جديد</a>
               </li>
+              <li><a class="menu-item" href="{{route('user.medication.crete.exists')}}" data-i18n="nav.dash.crypto">أضافة
+                     موجود دواء </a>
+                 </li>
           </ul>
       </li>
 

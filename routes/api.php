@@ -14,6 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+
+Route::group(['prefix'=>'medications','namespace' => 'Api'],function () {
+  
+    Route::get('medication',"MedicationController@getMedicationWithPharmce");
+    Route::get('medication-withe-category',"MedicationController@getMedicationWithCategory");
+    Route::get('categorys',"MedicationController@getAllCategorys");
+
+
 });
+

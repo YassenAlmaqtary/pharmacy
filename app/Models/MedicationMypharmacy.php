@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MedicationMypharmacy extends Model
 {
     use HasFactory;
-    protected $table='medication_mypharmacys';
+    protected $table='mypharmacy_medication';
 
 
     protected $fillable = [
@@ -27,12 +27,15 @@ class MedicationMypharmacy extends Model
     ];
 
     protected $hidden = [
-        'created_at','updatet_at','mypharmacy_id','medication_id'
+        'created_at',
+        'updatet_at',
+        
     ];
+
     public function getActive()
     {
 
-        return $this->status == 1 ? 'متوفر' : 'غير متوفر';
+        return $this->status == 1 ?  ' متوفر':'غير متوفر' ;
     }
 
     public function scopeActive($qury)
@@ -40,9 +43,17 @@ class MedicationMypharmacy extends Model
 
         return $qury->where('status', 1);
     }
-
-    public function medications(){
-        return $this->belongsToMany(Medication::class,'medication_mypharmacys','mypharmacy_id','id');
+    public function scopeSelection($qury)
+    {
+        return $qury->select('id','mypharmacy_id','medication_id','quntity','price','expiry_date', 'production_date','categorie_id');
     }
+
+    // public function medications(){
+    //     return $this->belongsToMany(Medication::class,'medication_mypharmacys','medication_id','id');
+    // }
+
+    public function category(){
+        return $this->belongsTo(Category::class,'categorie_id','id');
+      }
 
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ParnacyRequest;
+use App\Models\Medication;
+use App\Models\MedicationMypharmacy;
 use App\Models\MyPharmacy;
 use Carbon\Carbon;
 use Doctrine\DBAL\Schema\View;
@@ -11,6 +13,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mockery\Expectation;
 
 class MyPharmacyController extends Controller
 {
@@ -193,6 +196,27 @@ class MyPharmacyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $myPharmacy=MyPharmacy::find($id);
+            
+            if(!$myPharmacy)
+            return redirect()->route('user.medication')->with(['error' => 'هذة القسم غير موجودة']);
+            $medications=$myPharmacy->medications;
+            if($medications and $medications->count()>0)
+            foreach($medications as $medication){
+                MedicationMypharmacy::where('medication_id',$medication->id)->delete();
+            }
+           
+            removeImage($myPharmacy->photo);
+            $myPharmacy->delete();
+            return  redirect()->route('user.pharmacy')->with(['success' => 'تم الحذف بنجاح']);
+          
+        }       
+        
+               
+        
+        catch(Expectation $exp){
+            return  redirect()->route('user.pharmacy')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
     }
 }

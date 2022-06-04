@@ -24,7 +24,7 @@ class Medication extends Model
     ];
 
     protected $hidden = [
-        'created_at','updatet_at',
+        'created_at','updatet_at','user_id','pivot'
     ];
 
     public function getActive()
@@ -48,7 +48,8 @@ class Medication extends Model
       }
 
     public function Pharmacys(){
-        return $this->belongsToMany(MyPharmacy::class,'medication_mypharmacys','medication_id','id');
+        return $this->belongsToMany(MyPharmacy::class,'mypharmacy_medication','medication_id','id');
+       
     }
 
     

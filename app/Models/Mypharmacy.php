@@ -27,11 +27,10 @@ class MyPharmacy extends Model
     ];
 
     protected $hidden = [
-        'created_at','updatet_at','user_id'
+        'created_at','updatet_at','user_id','pivot'
     ];
     public function scopeActive($qury)
     {
-
         return $qury->where('statuse', 1);
     }
 
@@ -43,7 +42,6 @@ class MyPharmacy extends Model
 
     public function getActive()
     {
-
         return $this->statuse == 1 ? 'مفعل'  : 'غير مفعل';
     }
     
@@ -52,9 +50,9 @@ class MyPharmacy extends Model
     public function user(){
         return $this->belongsTo(User::class,'user_id','id');
       }
-
+      
       public function medications(){
-        return $this->belongsToMany(Medication::class,'medication_mypharmacys','mypharmacy_id','id');
+        return $this->belongsToMany(Medication::class,'mypharmacy_medication','id','medication_id');
     }
     
 
