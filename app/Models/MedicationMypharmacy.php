@@ -13,8 +13,8 @@ class MedicationMypharmacy extends Model
 
     protected $fillable = [
         'id',
-        'mypharmacy_id',
         'medication_id',
+        'mypharmacy_id',
         'user_id',
         'quntity',
         'price',
@@ -29,7 +29,7 @@ class MedicationMypharmacy extends Model
     protected $hidden = [
         'created_at',
         'updatet_at',
-        
+        'categorie_id',
     ];
 
     public function getActive()
@@ -47,10 +47,6 @@ class MedicationMypharmacy extends Model
     {
         return $qury->select('id','mypharmacy_id','medication_id','quntity','price','expiry_date', 'production_date','categorie_id');
     }
-
-    // public function medications(){
-    //     return $this->belongsToMany(Medication::class,'medication_mypharmacys','medication_id','id');
-    // }
 
     public function category(){
         return $this->belongsTo(Category::class,'categorie_id','id');

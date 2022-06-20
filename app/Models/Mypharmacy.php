@@ -52,7 +52,7 @@ class MyPharmacy extends Model
       }
       
       public function medications(){
-        return $this->belongsToMany(Medication::class,'mypharmacy_medication','id','medication_id');
+        return $this->belongsToMany(Medication::class,'mypharmacy_medication','mypharmacy_id','medication_id');
     }
     
 

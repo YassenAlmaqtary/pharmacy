@@ -20,11 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['prefix'=>'medications','namespace' => 'Api'],function () {
-  
     Route::get('medication',"MedicationController@getMedicationWithPharmce");
-    Route::get('medication-withe-category',"MedicationController@getMedicationWithCategory");
+    Route::get('pharmacy-byOf-medication',"MedicationController@getPharmacyByFoMedication");
+    Route::get('category-with-medication','MedicationController@getCategorysWithMedication');
+    Route::get('medication-byOf-category',"MedicationController@getMedicationByOFCategory");
     Route::get('categorys',"MedicationController@getAllCategorys");
-
-
 });
 

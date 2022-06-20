@@ -48,9 +48,8 @@ class Medication extends Model
       }
 
     public function Pharmacys(){
-        return $this->belongsToMany(MyPharmacy::class,'mypharmacy_medication','medication_id','id');
-       
-    }
+        return $this->belongsToMany(MyPharmacy::class,'mypharmacy_medication','medication_id','mypharmacy_id');  
+    }   
 
     
 

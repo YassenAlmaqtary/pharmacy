@@ -13,6 +13,9 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Stmt\Foreach_;
+
+use function PHPUnit\Framework\returnSelf;
 
 class MedicationController extends Controller
 {
@@ -32,7 +35,7 @@ class MedicationController extends Controller
         if(!$medications_id)
         return $this->returnError('E001', 'هذاالمنتج  موجود');
         foreach($medications_id as $medication_id){
-         if($request)   
+         if($request->has('page'))   
          $medication_pharmacy=Medication::with('Pharmacys')->where('id',$medication_id->medication_id)->paginate($request->page);
          else
          $medication_pharmacy=Medication::with('Pharmacys')->where('id',$medication_id->medication_id)->get();
@@ -45,9 +48,63 @@ class MedicationController extends Controller
     }
 }
 
+public function getCategorysWithMedication(Request $request){
+  try{
+    $validator=Validator::make($request->all(),[
+      'page'=>'integer'
+      ]);
+      if($validator->fails()){
+       return $this->returnError("E001",$validator->getMessageBag()->toArray());
+      }
+      if($request->has('page')){
+      $categorys=Category::with(['medications'=>function($qury){
+        $qury->select('medication_id','categorie_id');
+           
+         }])->active()->paginate($request->page);
+        }
+      else{   
+     $categorys=Category::with(['medications'=>function($qury){
+    $qury->select('medication_id','categorie_id');
+       
+     }])->active()->get();
+    }
+     
+     foreach ($categorys as $category){
+      $data_medication=[];
+      $medications_id=[];
+      $medications=[];
+     if( count($category->medications)>0)
+      foreach($category->medications as $index=>$medication){ 
+      $data_medication[$index]= $medication->medication_id;
+      $medications_id=FilterDissedNumber($data_medication);
+     }
+  
+    foreach($medications_id as $index=>$id){
+      if($request->has('page')){
+        $medications[$index]=Medication::select('id','trade_name','photo')->find($id)->paginate($request->page);
+      }
+      else{
+        $medications[$index]=Medication::select('id','trade_name','photo')->find($id);
+      }
+    }
+    $data_array[]=[
+      'id'=>$category->id,
+      'name'=>$category->name,
+      'medications'=>$medications,
+      
+    ];
 
+     }
+        
+    return  $this->returnData('data', $data_array);
+    
+  }
+  catch(Exception $exp){
+    return $this->returnError($exp->getCode(), $exp->getMessage());
+  }
+}
 
-public function getMedicationWithCategory(Request $request){
+public function getMedicationByOFCategory(Request $request){
 
    try{
       
@@ -58,9 +115,9 @@ public function getMedicationWithCategory(Request $request){
         if($validator->fails()){
          return $this->returnError("E001",$validator->getMessageBag()->toArray());
         }
-        $data_array=[];
-        $medications=Category::find($request->categorie_id)->medications();
         
+        $medications=Category::find($request->categorie_id)->medications;
+      
         
         foreach($medications as $medication){
             $data_array[]=[
@@ -106,6 +163,30 @@ public function getAllCategorys(Request $request){
     return $this->returnError($exp->getCode(), $exp->getMessage());
   }
 }
+
+
+public function getPharmacyByFoMedication(Request $request){
+  try{
+     
+      $validator=Validator::make($request->all(),[
+      'medication_id'=>'required'
+      ]);
+      if($validator->fails()){
+       return $this->returnError("E001",$validator->getMessageBag()->toArray());
+      }
+      $medication=Medication::find($request->medication_id);
+      
+      if(!$medication){
+        return $this->returnError('E001', 'هذاالمنتج  موجود');
+      }
+      $pharmacys=$medication->Pharmacys;
+      return $this->returnData('data', $pharmacys);
+  }
+  catch(Exception $exp){
+    return $this->returnError($exp->getCode(), $exp->getMessage());
+  }
+}
+
 
 
 

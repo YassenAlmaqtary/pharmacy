@@ -88,10 +88,10 @@ function get_url_pdf($value){
  } 
 
 
-function nullSercheValueincollect($array,$value){
+function nullSercheValueincollect($array,$value){ 
 
-   $statues=true;
-   foreach($array as $val ){
+   $statues=true; 
+   foreach($array as $val ){ 
      if($val==$value){
      $statues=false;
      break;
@@ -99,3 +99,36 @@ function nullSercheValueincollect($array,$value){
    }
    return $statues;
 }
+  
+ function numberInArry($value,$array){
+   $status=false;
+   if($value==null){
+      $status=false;
+      return $status;
+   }
+   foreach($array as $data){
+     if($value==$data){
+        $status=true;
+        return $status;
+     }
+   }
+   return $status;
+}
+
+
+ function FilterDissedNumber($array){
+   $data_arry[]=array();
+    foreach($array as $index=>$data){
+     
+       if(numberInArry($data,$data_arry)){
+         continue;
+       }
+         else{ 
+         $data_arry[$index]=$data;
+         } 
+          
+    }
+    return $data_arry;
+
+ }
+
