@@ -25,5 +25,6 @@ Route::group(['prefix'=>'medications','namespace' => 'Api'],function () {
     Route::get('category-with-medication','MedicationController@getCategorysWithMedication');
     Route::get('medication-byOf-category',"MedicationController@getMedicationByOFCategory");
     Route::get('categorys',"MedicationController@getAllCategorys");
+    Route::get('serch-medication-name/{name}',"MedicationController@getSerchNameMedaiction");
 });
 

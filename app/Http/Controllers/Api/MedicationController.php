@@ -167,7 +167,7 @@ public function getAllCategorys(Request $request){
 
 public function getPharmacyByFoMedication(Request $request){
   try{
-     
+      $data_array=[];
       $validator=Validator::make($request->all(),[
       'medication_id'=>'required'
       ]);
@@ -175,19 +175,52 @@ public function getPharmacyByFoMedication(Request $request){
        return $this->returnError("E001",$validator->getMessageBag()->toArray());
       }
       $medication=Medication::find($request->medication_id);
+
       
       if(!$medication){
         return $this->returnError('E001', 'هذاالمنتج  موجود');
       }
       $pharmacys=$medication->Pharmacys;
-      return $this->returnData('data', $pharmacys);
+      foreach ($pharmacys as $pharmacy){
+       $data=MedicationMypharmacy::select('quntity','price')->where(['medication_id'=>$request->medication_id,'mypharmacy_id'=>$pharmacy->id])->first();
+      $data_array[]=[
+        'id'=> $pharmacy->id,
+        'quntity'=>$data->quntity,
+        'name'=>$pharmacy->name,
+        'mobile'=>$pharmacy->mobile1,
+        'photo'=>$pharmacy->photo,
+        'price'=>$data->price
+      ];
+
+      }
+      
+      return $this->returnData('data', $data_array);
   }
   catch(Exception $exp){
     return $this->returnError($exp->getCode(), $exp->getMessage());
   }
 }
 
+public function getSerchNameMedaiction($name){
+ try{
+  
+   $medications=Medication::whereLike('trade_name',$name)->get();
+   $medication_id=MedicationMypharmacy::where('medication_id',$medications->first()->id)->select('medication_id')->get();
+   if($medication_id){
+    $medication= Medication::select('trade_name','id')->with(['Pharmacys'=>function($qury){
+      $qury->select('mypharmacy_id','name','quntity','price','mobile1','photo')->get();
+    }])->find($medication_id);
+    return $this->returnData('data', $medication);
+   }
+   else{
+    return $this->returnError("200","لايوجد");
+   }
+ }
 
+ catch(Exception $exp){
+  return $this->returnError($exp->getCode(), $exp->getMessage());
+ }
+}
 
 
 }
