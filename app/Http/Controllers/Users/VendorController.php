@@ -39,7 +39,7 @@ class VendorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    { 
         return view('user.vendors.create');
     }
 
@@ -52,10 +52,10 @@ class VendorController extends Controller
     public function store(UserRequest $request)
     {
         try{
-            // if (!$request->has('active'))
-            //     $request->request->add(['active' => 0]);
-            // else
-            //     $request->request->add(['active' => 1]);
+            if (!$request->has('active'))
+                $request->request->add(['active' => 0]);
+            else
+                $request->request->add(['active' => 1]);
             
                 DB::beginTransaction(); 
                $user= User::Create(['name'=>$request->name,
@@ -69,6 +69,7 @@ class VendorController extends Controller
                  return redirect()->route('user.vendors')->with(['success' => 'تم الحفظ بنجاح']);
         }
         catch(Exception $exp){
+            
             DB::rollBack();
             return  redirect()->route('user.vendors.create')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
         }
