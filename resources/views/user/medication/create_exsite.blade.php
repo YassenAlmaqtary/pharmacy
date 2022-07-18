@@ -49,7 +49,7 @@
                                                 <div class="col-md-6 ">
                                                     <div class="form-group">
                                                         <label for="projectinput1">الكمية</label>
-                                                        <input type="text" id="quntity"
+                                                        <input type="number" id="quntity"
                                                                class="form-control"
                                                                placeholder="" name="quntity">
 
@@ -61,7 +61,7 @@
                                                 <div class="col-md-6 ">
                                                     <div class="form-group">
                                                         <label for="projectinput1">السعر</label>
-                                                        <input type="text" id="price"
+                                                        <input type="number" id="price"
                                                                class="form-control"
                                                                placeholder="" name="price">
 
@@ -74,8 +74,9 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="projectinput2"> أختر القسم  </label>
-                                                            <select name="categories_id" class="select2 form-control">
+                                                            <select onchange="load_medication(value)" name="categories_id" class="select2 form-control">
                                                                 <optgroup label=" من فضلك أختر القسم ">
+                                                                    <option>اختر</option>
                                                                     @if($catgorys && $catgorys-> count() > 0)
                                                                         @foreach($catgorys as $catgory)
                                                                             <option
@@ -93,15 +94,15 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="projectinput2"> أخترالدواء  </label>
-                                                            <select name="medication_id" class="select2 form-control">
-                                                                <optgroup label=" من فضلك أختر الدواء ">
-                                                                    @if($medications && $medications-> count() > 0)
-                                                                        @foreach($medications as $medication)
-                                                                            <option
-                                                                                value="{{$medication->id }}">{{$medication->trade_name}}</option>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </optgroup>
+                                                            <select name="medication_id" id="medications" class="select2 form-control">
+                                                                <option>اختر</option>
+                                                                @isset($data['medication'])
+                                                                 @foreach($data['medication'] as $m)
+                                                                    <option
+                                                                 {{ $medication_id == $m->id ? "selected" : "" }} value="{{ $m->id }}">{{ $m->trade_name }}
+                                                                     </option>
+                                                                  @endforeach
+                                                                @endisset
                                                             </select>
                                                             @error('medication_id')
                                                             <span class="text-danger"> {{$message}}</span>
@@ -210,6 +211,13 @@
 </div>
 
 @endsection
+
+@push('scripts')
+
+@include('layouts.js.load_medications')
+
+
+@endpush
 
 
 

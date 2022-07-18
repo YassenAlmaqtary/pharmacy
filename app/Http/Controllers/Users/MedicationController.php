@@ -39,7 +39,8 @@ class MedicationController extends Controller
         $MedicationArry=[];
         foreach( $medications as $medication){
             $medication_decription=Medication::where(['id'=>$medication->medication_id])->selection()->first();
-
+            
+              
                 $MedicationArry[]=[
                     'id'=>$medication->id,
                     'trade_name'=>$medication_decription->trade_name,
@@ -119,6 +120,7 @@ class MedicationController extends Controller
                     'photo' => $filePath,
                     //'active' => $request->active,
                     'user_id' => Auth::user()->id,
+                    'category_id'=> $request->categories_id,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]
@@ -141,6 +143,8 @@ class MedicationController extends Controller
             
          }
         
+
+         
         catch (Exception $exp) {
             DB::rollBack();
             removeImage($filePath);
@@ -154,6 +158,10 @@ class MedicationController extends Controller
     {
         try {
             
+            $data_chek= MedicationMypharmacy::where(['medication_id'=>$request->medication_id,'user_id'=>Auth::user()->id])->get();
+            if(count($data_chek)>0){
+                return  redirect()->route('user.medication')->with(['error' => 'لقد اضفت هذا الدواء بالفعل']);
+            }
               
                if (!$request->has('active'))
 
@@ -217,11 +225,10 @@ class MedicationController extends Controller
                 return redirect()->route('user.medication')->with(['error' => 'هذة القسم غير موجودة']);
             }
             $mypharmacy = MyPharmacy::select('id','name')->where('user_id',Auth::user()->id)->get();
-            //return $medication_Pharmace;
-            $category = Category::select('id','name')->where('id',$medication_Pharmace->categorie_id)->active()->get();
-            $catgorys = Category::select('id','name')->active()->get();
-            $medication=Medication::select('id','trade_name')->where('id',$medication_Pharmace->medication_id)->get();
-            $medications=Medication::select('id','trade_name')->get();
+            $category = Category::select('id','name')->where('id',$medication_Pharmace->categorie_id)->active()->first();
+            //$catgorys = Category::select('id','name')->active()->get();
+            $medication=Medication::select('id','trade_name')->where('id',$medication_Pharmace->medication_id)->first();
+            //$medications=Medication::select('id','trade_name')->get();
             $data=[
                  'id'=>$medication_Pharmace->id,
                  'quntity'=>$medication_Pharmace->quntity,
@@ -229,12 +236,12 @@ class MedicationController extends Controller
                  'expiry_date'=>$medication_Pharmace->expiry_date,
                  'production_date'=>$medication_Pharmace->production_date,
                  'category'=> $category,
-                 'categorys'=> $catgorys,
+                 //'categorys'=> $catgorys,
                  'medication'=>$medication,
-                 'medications'=>$medications,
+                 //'medications'=>$medications,
                  'mypharmacy'=>$mypharmacy,
                 ];
-
+                
               return view('user.medication.ubdate',compact('data'));
 
     }       
@@ -299,4 +306,24 @@ class MedicationController extends Controller
             return  redirect()->route('user.medication')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']); 
         }
     }
+
+
+   public function loadMedication(Request $request){
+
+      try{
+        $result = "<option>"."اختر"."</option>";
+        if($request->id){
+         $data['medication']=Medication::where('category_id',$request->id)->select('id', 'trade_name')->active()->get();
+         foreach ($data['medication'] as $medication){
+            $result .= '<option value="'.$medication->id.'">'.$medication->trade_name.'</option>';
+        }
+        }
+        return $result;
+
+      }
+      catch(Exception $exp){
+        redirect()->route('user.medication')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']); 
+      }
+
+   }
 }

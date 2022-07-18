@@ -25,7 +25,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">بيانات الصيدلية</h4>
+                                <h4 class="card-title"> بيانات الدواء البديل</h4>
                                 <a class="heading-elements-toggle"><i
                                         class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
@@ -47,43 +47,47 @@
                                         class="table display nowrap table-striped table-bordered scroll-horizontal">
                                         <thead>
                                         <tr>
-                                            <th> اسم الصيدلية </th>
+                                            <th> اسم التجاري الدواء </th>
+                                            <th>الاسم العلمي الدواء</th>
                                             <th>الشعار</th>
-                                            <th>الرخصة</th>
-                                            <th>العنوان</th>
-                                            <th>تفاصيل العنوان</th>
-                                            <th>التواصل الاجتماعي</th>
-                                            <th>الهاتف 1</th>
-                                            <th>الهاتف 2</th>
+                                            <th>البلد المصنع</th>
+                                            <th>السعر </th>
+                                            <th>الكمية</th>
+                                            <th>تاريخ  الانتاج</th>
+                                            <th> تاريخ الانتهاء</th>
                                             <th>الحالة</th>
                                             <th>الإجراءات</th>
                                         </tr>
                                         </thead>   
                                         <tbody>
-                                            @isset($pharamcys)
-                                            @foreach($pharamcys as $pharamcy)  
+                                            @if($MedicationArry and count($MedicationArry)>0)
+                                            
+                                            @foreach($MedicationArry as $Medication)  
                                                 <tr>
-                                                    <td>{{$pharamcy->name}}</td>
-                                                    <td><img style="width: 150px; height: 100px;" src="{{get_url_image($pharamcy->photo)}}"></td>
-                                                    <td><a href="{{get_url_pdf($pharamcy->pdf_path)}}">تنزيل</a></td>
-                                                    <td>{{$pharamcy->address}}</td>
-                                                    <td>{{$pharamcy->adderss_details}}</td>
-                                                    <td>{{$pharamcy->social_media}}</td>
-                                                    <td>{{$pharamcy->mobile1}}</td>
-                                                    <td>{{$pharamcy->mobile2}}</td>
-                                                    <td>{{$pharamcy->getActive()}}</td>
+                                                    <td>{{$Medication['trade_name']}}</td>
+                                                    <td>{{$Medication['scientific_name']}}</td>
+                                                    <td><img style="width: 150px; height: 100px;" src="{{get_url_image($Medication['photo'])}}"></td>
+                                                    <td>{{$Medication['made_in']}}</td>
+                                                    <td>{{$Medication['pric']}}</td>
+                                                    <td>{{$Medication['quntity']}}</td>
+                                                    <td>{{$Medication['production_date']}}</td>
+                                                    <td>{{$Medication['expiry_date']}}</td>
+                                                    <td>{{$Medication['status']}}</td>
                                                     {{-- <td>{{$pharamcy->c}}</td> --}}
                                                 
                                                     <td>
                                                         <div class="btn-group" role="group"
                                                              aria-label="Basic example">
-                                                            <a href="{{route('user.pharmacy.edit',$pharamcy->id)}}" class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
-
+                                                             <a href="{{route('user.allter_native.show',$Medication['medication_id'])}}"
+                                                                class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">
+                                                               عرض الدواء الرئيسي   
+                                                            </a>  
+                                                            <a href="{{route('user.allter_native.edit',$Medication['id'])}}" class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
 
                                                             <a href="" onclick="event.preventDefault();
                                                             document.getElementById('form').submit();" class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1"> حذف </a>
                                                               
-                                                            <form id="form" action="{{route('user.pharmacy.delete',$pharamcy->id)}}" method="POST" class="d-none">
+                                                            <form id="form" action="{{route('user.allter_native.delete',$Medication['id'])}}" method="POST" class="d-none">
                                                                 @method('delete')
                                                                 @csrf
                                                             </form>
@@ -106,7 +110,7 @@
                                                     </td>
                                                 </tr>
                                                 @endforeach
-                                                @endisset  
+                                                @endif  
                                         </tbody> 
                                     </table>
                                     <div class="justify-content-center d-flex">

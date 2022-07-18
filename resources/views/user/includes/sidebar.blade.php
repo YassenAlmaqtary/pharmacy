@@ -37,7 +37,17 @@
               <li><a class="menu-item" href="{{route('user.medication.crete.exists')}}" data-i18n="nav.dash.crypto">أضافة
                      موجود دواء </a>
                  </li>
+                 <li><a class="menu-item" href="{{route('user.allter_native')}}" data-i18n="nav.dash.crypto">عرض
+                     دواء بديل</a>
+                </li>   
+                 <li><a class="menu-item" href="{{route('user.allter_native.create')}}" data-i18n="nav.dash.crypto">أضافة
+                     دواء بديل</a>
+                </li>   
+                <li><a class="menu-item" href="{{route('user.allter_native.crete.exists')}}" data-i18n="nav.dash.crypto">أضافة
+                     دواء بديل موجود</a>
+                </li> 
           </ul>
+         
       </li>
 
             {{-- <li class="nav-item"><a href=""><i class="la la-male"></i>

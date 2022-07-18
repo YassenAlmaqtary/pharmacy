@@ -17,7 +17,7 @@ class Medication extends Model
         'made_in',
         'photo',
         'user_id',
-        'categorie_id',
+        'category_id',
         'active',
         'created_at',
         'updated_at'
@@ -45,6 +45,9 @@ class Medication extends Model
      
     public function user(){
         return $this->belongsTo(User::class,'user_id','id');
+      }
+      public function altterNatives(){
+        return $this->hasMany(AllterNative::class,'medication_id','id');
       }
 
     public function Pharmacys(){

@@ -13,9 +13,9 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Stmt\Catch_;
 use PhpParser\Node\Stmt\Foreach_;
 
-use function PHPUnit\Framework\returnSelf;
 
 class MedicationController extends Controller
 {
@@ -47,9 +47,10 @@ class MedicationController extends Controller
         return $this->returnError($exp->getCode(), $exp->getMessage());
     }
 }
-
+////////////////////////////////////////////////////////////////////
 public function getCategorysWithMedication(Request $request){
   try{
+    
     $validator=Validator::make($request->all(),[
       'page'=>'integer'
       ]);
@@ -81,10 +82,10 @@ public function getCategorysWithMedication(Request $request){
   
     foreach($medications_id as $index=>$id){
       if($request->has('page')){
-        $medications[$index]=Medication::select('id','trade_name','photo')->find($id)->paginate($request->page);
+        $medications[$index]=Medication::select('id','trade_name','scientific_name','photo')->find($id)->paginate($request->page);
       }
       else{
-        $medications[$index]=Medication::select('id','trade_name','photo')->find($id);
+        $medications[$index]=Medication::select('id','trade_name','scientific_name','photo')->find($id);
       }
     }
     $data_array[]=[
@@ -103,7 +104,7 @@ public function getCategorysWithMedication(Request $request){
     return $this->returnError($exp->getCode(), $exp->getMessage());
   }
 }
-
+//////////////////////////////////////////////////////////////
 public function getMedicationByOFCategory(Request $request){
 
    try{
@@ -143,7 +144,7 @@ public function getMedicationByOFCategory(Request $request){
    }
 
 }
-
+/////////////////////////////////////////////////
 public function getAllCategorys(Request $request){
   try{
     $validator=Validator::make($request->all(),[
@@ -165,6 +166,29 @@ public function getAllCategorys(Request $request){
 }
 
 
+///////////////////////////////////////////////////////
+public function getAllPharmacy(Request $request){
+  try{
+    $validator=Validator::make($request->all(),[
+      'page'=>'integer'
+      ]);
+      if($validator->fails()){
+       return $this->returnError("E001",$validator->getMessageBag()->toArray());
+      }
+      if ($request->has('page'))
+      $pharmacys=MyPharmacy::active()->paginate($request->page);
+      else
+      $pharmacys=MyPharmacy::active()->get();
+      return $this->returnData('data', $pharmacys);
+
+  }
+  catch(Exception $exp){
+    return $this->returnError($exp->getCode(), $exp->getMessage());
+  }
+
+}
+//////////////////////////////////////////////////////////////
+
 public function getPharmacyByFoMedication(Request $request){
   try{
       $data_array=[];
@@ -182,14 +206,20 @@ public function getPharmacyByFoMedication(Request $request){
       }
       $pharmacys=$medication->Pharmacys;
       foreach ($pharmacys as $pharmacy){
-       $data=MedicationMypharmacy::select('quntity','price')->where(['medication_id'=>$request->medication_id,'mypharmacy_id'=>$pharmacy->id])->first();
+       $data=MedicationMypharmacy::where(['medication_id'=>$request->medication_id,'mypharmacy_id'=>$pharmacy->id])->first();
+      
       $data_array[]=[
         'id'=> $pharmacy->id,
         'quntity'=>$data->quntity,
         'name'=>$pharmacy->name,
         'mobile'=>$pharmacy->mobile1,
+        'phone'=>$pharmacy->mobile2,
+        'address'=>$pharmacy->address,
+        'adderss_details'=>$pharmacy->adderss_details,
         'photo'=>$pharmacy->photo,
-        'price'=>$data->price
+        'price'=>$data->price,
+        'production_date'=>$data->production_date,
+        'expiry_date'=>$data->expiry_date
       ];
 
       }
@@ -208,7 +238,10 @@ public function getSerchNameMedaiction($name){
    $medication_id=MedicationMypharmacy::where('medication_id',$medications->first()->id)->select('medication_id')->get();
    if($medication_id){
     $medication= Medication::select('trade_name','id')->with(['Pharmacys'=>function($qury){
-      $qury->select('mypharmacy_id','name','quntity','price','mobile1','photo')->get();
+      $qury->select('mypharmacy_id','name','quntity','address','adderss_details','social_media','price','mobile1','mobile2',
+      'production_date',
+      'expiry_date',
+      'photo')->get();
     }])->find($medication_id);
     return $this->returnData('data', $medication);
    }

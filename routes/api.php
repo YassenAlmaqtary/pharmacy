@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AllterNativeController;
+use App\Http\Controllers\Api\PharmacyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +27,21 @@ Route::group(['prefix'=>'medications','namespace' => 'Api'],function () {
     Route::get('category-with-medication','MedicationController@getCategorysWithMedication');
     Route::get('medication-byOf-category',"MedicationController@getMedicationByOFCategory");
     Route::get('categorys',"MedicationController@getAllCategorys");
+    Route::get('pharmacys',"MedicationController@getAllPharmacy");
     Route::get('serch-medication-name/{name}',"MedicationController@getSerchNameMedaiction");
 });
+////////////////////////////////////////////////////////////////////////////
 
+
+
+Route::group(['prefix'=>'allterNatives','namespace' => 'Api'],function () {
+    
+    Route::get('allterNative','AllterNativeController@getAltterNative');
+    Route::get('medicationByAllterNantive','AllterNativeController@getMedication');
+    Route::get('allterNativeExsiteOFPharmacy','AllterNativeController@getAllterNativeExsistePharmacy');
+
+});
+///////////////////////////////////////////////////////////////////////////////
+Route::group(['prefix'=>'pharmacys','namespace' => 'Api'],function () {
+    Route::get('medication-byOf-pharmacy','PharmacyController@getMedicationByOfPharmacy');
+});

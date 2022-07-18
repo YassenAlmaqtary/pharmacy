@@ -33,7 +33,7 @@
                             @include('user.includes.alerts.errors')
                             <div class="card-content collapse show">
                                 <div class="card-body">
-                                    <form class="form" action="{{route('user.medication.update',$data['id'])}}"
+                                    <form class="form" action="{{route('user.allter_native.update',$data['id'])}}"
                                           method="POST"
                                           enctype="multipart/form-data">
                                           @method('put')
@@ -70,31 +70,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput2"> أختر القسم  </label>
-                                                            <select name="categorie_id" class="select2 form-control" >
-                                                             
-                                                                               <option
-                                                                                value="{{$data['category']->id }}">{{$data['category']->name}}</option>
-                                                                      
-                                                    
-                                                                </optgroup>
-                                                            </select>
-                                                            @error('categorie_id')
-                                                            <span class="text-danger"> {{$message}}</span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="projectinput2"> أخترالدواء  </label>
-                                                            <select name="medication_id" class="select2 form-control">
-                    
+                                                            <select name="allter_native_id" class="select2 form-control">
                                 
                                                                             <option
-                                                                              value="{{$data['medication']->id }}">{{$data['medication']->trade_name}}</option>
+                                                                              value="{{$data['allterNitave']->id }}">{{$data['allterNitave']->trade_name}}</option>
                                                                      
                                                                 </optgroup>
                                                             </select>
@@ -162,27 +145,10 @@
                                                 </div>
                                             
                                          </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="projectinput2"> أختر الصيدلية  </label>
-                                                    <select name="mypharmacy_id" class="select2 form-control">
-                                                        <optgroup label=" من فضلك أختر الصيدلية ">
-                                                            @if($data['mypharmacy'] && $data['mypharmacy']-> count() > 0)
-                                                                @foreach($data['mypharmacy'] as $mypharmacy)
-                                                                    <option
-                                                                        value="{{$mypharmacy->id }}">{{$mypharmacy->name}}</option>
-                                                                @endforeach
-                                                            @endif
-                                                        </optgroup>
-                                                    </select>
-                                                    @error('mypharmacy_id')
-                                                    <span class="text-danger"> {{$message}}</span>
-                                                    @enderror
-                                                </div>
-                                            </div>
+                                         
 
                                            
-                                           </div>
+                                      </div>
                                               
                                          
                                         

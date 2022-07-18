@@ -102,7 +102,7 @@
                                                 <div class="col-md-6 ">
                                                     <div class="form-group">
                                                         <label for="projectinput1">الكمية</label>
-                                                        <input type="text" id="quntity"
+                                                        <input type="number" id="quntity"
                                                                class="form-control"
                                                                placeholder="" name="quntity">
 
@@ -114,7 +114,7 @@
                                                 <div class="col-md-6 ">
                                                     <div class="form-group">
                                                         <label for="projectinput1">السعر</label>
-                                                        <input type="text" id="price"
+                                                        <input type="number" id="price"
                                                                class="form-control"
                                                                placeholder="" name="price">
 
@@ -129,6 +129,7 @@
                                                         <label for="projectinput2"> أختر القسم  </label>
                                                         <select name="categories_id" class="select2 form-control">
                                                             <optgroup label=" من فضلك أختر القسم ">
+                                            
                                                                 @if($catgorys && $catgorys-> count() > 0)
                                                                     @foreach($catgorys as $catgory)
                                                                         <option

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MedicationRequest extends FormRequest
+class AltterNativeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,18 +25,16 @@ class MedicationRequest extends FormRequest
     {
         return [
             'photo'=> 'required_without:id|mimes:jpg,jpeg,png,svg',
-            'trade_name'=> 'required|string|max:100|unique:medications,trade_name'.$this -> id,
-            'scientific_name'=>'required|string|max:100|unique:medications,scientific_name'.$this->id,
-            'mypharmacy_id'=>'required',
+            'trade_name'=> 'required|string|max:100|unique:allter_natives,trade_name'.$this -> id,
+            'scientific_name'=>'required|string|max:100|unique:allter_natives,scientific_name'.$this->id,
+            'medication_id'=>'required',
             'made_in'=>['required','string','regex:/^[a-zA-Z]+$/u'],
             'quntity'=>'required|Integer|min:1',
             'price'=>'required|Integer|regex:/^\d+(\.\d{1,2})?$/',
             'production_date' => 'required',
             'expiry_date'=>'required|date|after:production_date',
-           
         ];
     }
-
 
     public function messages(){
 
@@ -54,5 +52,4 @@ class MedicationRequest extends FormRequest
            
         ];
     }
-
 }

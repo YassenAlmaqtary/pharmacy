@@ -25,7 +25,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">بيانات الدواء</h4>
+                                <h4 class="card-title"> بيانات الدواء البديل</h4>
                                 <a class="heading-elements-toggle"><i
                                         class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
@@ -51,10 +51,6 @@
                                             <th>الاسم العلمي الدواء</th>
                                             <th>الشعار</th>
                                             <th>البلد المصنع</th>
-                                            <th>السعر </th>
-                                            <th>الكمية</th>
-                                            <th>تاريخ  الانتاج</th>
-                                            <th> تاريخ الانتهاء</th>
                                             <th>الحالة</th>
                                             <th>الإجراءات</th>
                                         </tr>
@@ -68,43 +64,9 @@
                                                     <td>{{$Medication['scientific_name']}}</td>
                                                     <td><img style="width: 150px; height: 100px;" src="{{get_url_image($Medication['photo'])}}"></td>
                                                     <td>{{$Medication['made_in']}}</td>
-                                                    <td>{{$Medication['pric']}}</td>
-                                                    <td>{{$Medication['quntity']}}</td>
-                                                    <td>{{$Medication['production_date']}}</td>
-                                                    <td>{{$Medication['expiry_date']}}</td>
-                                                    <td>{{$Medication['status']}}</td>
+                                                    <td>{{$Medication['active']}}</td>
                                                     {{-- <td>{{$pharamcy->c}}</td> --}}
-                                                
-                                                    <td>
-                                                        <div class="btn-group" role="group"
-                                                             aria-label="Basic example">
-                                                            <a href="{{route('user.medication.edit',$Medication['id'])}}" class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
 
-
-                                                            <a href="" onclick="event.preventDefault();
-                                                            document.getElementById('form').submit();" class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1"> حذف </a>
-                                                              
-                                                            <form id="form" action="{{route('user.medication.delete',$Medication['id'])}}" method="POST" class="d-none">
-                                                                @method('delete')
-                                                                @csrf
-                                                            </form>
-
-                                                            {{-- <a href="{{route('user.pharmacy.show',$pharamcy->id)}}"
-                                                                class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">
-                                                                عرض الادوية      
-                                                            </a>      --}}
-
-                                                          {{-- <a href=""
-                                                                class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">
-                                                                 @if($vendors->active == 0)
-                                                                     تفعيل
-                                                                     @else
-                                                                     الغاء تفعيل
-                                                                 @endif
-                                                             </a>
-                                                            --}}
-                                                        </div>
-                                                    </td>
                                                 </tr>
                                                 @endforeach
                                                 @endif  

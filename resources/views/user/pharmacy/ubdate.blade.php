@@ -132,9 +132,20 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-
-
                                             </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="projectinput1">تفاصيل العنوان</label>
+                                                    <textarea value="{{$pharmacy->adderss_details}}" id="name"
+                                                           class="form-control"
+                                                           name="adderss_details">
+                                                    </textarea>
+                                                           @error("adderss_details")
+                                                           <span class="text-danger">{{$message}}</span> 
+                                                           @enderror  
+                                                    
+                                                </div>
 
 
                                             <div class="row">

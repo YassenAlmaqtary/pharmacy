@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ParnacyRequest;
+use App\Http\Requests\ParnacyRequestExsist;
 use App\Models\Medication;
 use App\Models\MedicationMypharmacy;
 use App\Models\MyPharmacy;
@@ -31,7 +32,7 @@ class MyPharmacyController extends Controller
     public function index()
     {
         $pharamcys=MyPharmacy::where(['user_id'=>Auth::user()->id])->selection()->get();
-        
+         
        return view('user.pharmacy.index',compact('pharamcys'));
     }
 
@@ -54,11 +55,14 @@ class MyPharmacyController extends Controller
     public function store(ParnacyRequest $request)
     {  
         try{
-        
+            $chek_data =MyPharmacy::select('id','name')->where('user_id',Auth::user()->id)->get();
+            if(count($chek_data)>0){
+                return  redirect()->route('user.pharmacy')->with(['success' => 'لقد اضفت من قبل']);
+            }
              //return  time().'.'.$request->pdf->extension();
              $filePath="";
              $pdfPath="";
-
+            
             if ($request->has('photo')) {
                 $filePath = uploadImage('users', $request->photo);
             }
@@ -84,6 +88,7 @@ class MyPharmacyController extends Controller
                 'mobile2'=>$request->mobile2,
                 'social_media'=>$request->social,
                 'address'=>$request->address,
+                'adderss_details'=>$request->adderss_details,
                 'user_id'=>Auth::user()->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -144,19 +149,36 @@ class MyPharmacyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ParnacyRequest $request, $id)
+    public function update(ParnacyRequestExsist $request, $id)
      { 
+    
     try {
-        $pharmacy = MyPharmacy::select()->find($id);
+        
+        $pharmacy = MyPharmacy::find($id);
         if (!$pharmacy) {
             return redirect()->route('user.pharmacy')->with(['error' => 'هذة القسم غير موجودة']);
         }
-        // if (!$request->has('active')) {
+        
+        $chek_name=$this->valdtionHeleberPharmacy('name',$request->name);
+        if($chek_name->count()>0){
+            return redirect()->route('user.pharmacy')->with(['error' => 'اسم الصيدلية موجود مع مستخدم اخر']);
+        }
+
+        $chek_mobile1=$this->valdtionHeleberPharmacy('mobile1',$request->mobile1);
+        if($chek_mobile1->count()>0){
+            return redirect()->route('user.pharmacy')->with(['error' => 'رقم الموبايل موجود مع مستخدم اخر']);
+        }
+        $chek_mobile2=$this->valdtionHeleberPharmacy('mobile2',$request->mobile2);
+        if($chek_mobile2->count()>0){
+            return redirect()->route('user.pharmacy')->with(['error' => 'رقم الهاتف موجود مع مستخدم اخر']);
+        }
+        // if (!$request->has('active') ) {
 
         //     $request->request->add(['active' => 0]);
         // } else {
         //     $request->request->add(['active' => 1]);
         // }
+
 
         $filePath = $pharmacy->photo;
         if ($request->has('photo')) {
@@ -177,6 +199,7 @@ class MyPharmacyController extends Controller
             'mobile2'=>$request->mobile2,
             'social_media'=>$request->social,
             'address'=>$request->address,
+            'adderss_details'=>$request->adderss_details,
             'updated_at' => Carbon::now(),
         ]);
         return  redirect()->route('user.pharmacy')->with(['success' => 'تم التحديث بنجاح']);
@@ -218,5 +241,16 @@ class MyPharmacyController extends Controller
         catch(Expectation $exp){
             return  redirect()->route('user.pharmacy')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
         }
+    }
+
+
+    public function valdtionHeleberPharmacy($coloum,$qury){
+
+      $data= DB:: table('mypharmacys')
+        ->where($coloum,'=',$qury)
+        ->where('user_id','!=',Auth::user()->id)
+        ->get();
+
+        return $data;
     }
 }

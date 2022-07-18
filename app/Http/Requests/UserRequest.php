@@ -24,8 +24,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            
-                'name'=> 'required|string|max:100',
+                'name'=>'required|string|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
                 'email'=> 'required|email|unique:users,email,'.$this -> id,
                 'password'=> 'required_without:id',
             

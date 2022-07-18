@@ -90,9 +90,27 @@ Route::group(['namespace' => 'Users'], function () {
            'destroy' => 'user.medication.delete',       
            ] 
          ]);
+         Route::any('get_medications','MedicationController@loadMedication')->name('load_medications');
              
         //##################### end medication ######################
 
     
+        //##################### bagin allter native ######################
+        Route::get('allter_native/create_exists','AllterNativeController@createExste')->name('user.allter_native.crete.exists');  
+        Route::post('allter_native/store_exists','AllterNativeController@storeExists')->name('user.allter_native.store.exists'); 
+        Route::resource('allter_native', 'AllterNativeController', [
+          'names' => [
+          'index' => 'user.allter_native',
+           'create' => 'user.allter_native.create',
+           'store' => 'user.allter_native.store',
+           'edit' => 'user.allter_native.edit',
+           'show'=> 'user.allter_native.show',
+           'update' => 'user.allter_native.update',
+           'destroy' => 'user.allter_native.delete',       
+           ] 
+         ]);
+         Route::any('get_allterNative','AllterNativeController@loadeAllterNative')->name('load_allterNative');
+
+       //##################### end allter native ######################
  });
 

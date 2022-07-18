@@ -44,10 +44,10 @@ return [
 
         'categories' => [
             'driver' => 'local',
-           'root' => public_path() . '/assets/admin/images/categories/', 
+            'root' => public_path() . '/assets/admin/images/categories/', 
            //'root' => base_path() . '/assets/admin/images/categories/',
             'url' => env('APP_URL').'/public',
-             'visibility' => 'public',
+            'visibility' => 'public',
         ],
         'cves' => [
             'driver' => 'local',
@@ -73,7 +73,15 @@ return [
            'root' => public_path() . '/assets/admin/images/medications/', 
            //'root' => base_path() . '/assets/admin/images/medications/'
             'url' => env('APP_URL').'/public',
-             'visibility' => 'public',
+            'visibility' => 'public',
+        ],
+
+        'allter_natives' => [
+            'driver' => 'local',
+           'root' => public_path() . '/assets/admin/images/allter_natives/', 
+           //'root' => base_path() . '/assets/admin/images/allter_natives/'
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
         ],
 
         's3' => [

@@ -17,7 +17,8 @@ class MyPharmacy extends Model
         'social_media',
         'address',
         'photo',
-         'pdf_path',
+        'pdf_path',
+        'adderss_details',
          'mobile1',
          'mobile2',
          'user_id',
@@ -37,7 +38,7 @@ class MyPharmacy extends Model
 
     public function scopeSelection($qury)
     {
-        return $qury->select('id','name','photo','social_media','address','pdf_path','mobile1','mobile2','user_id','statuse');
+        return $qury->select('id','name','photo','social_media','address','adderss_details','pdf_path','mobile1','mobile2','user_id','statuse');
     }
 
     public function getActive()
@@ -55,5 +56,9 @@ class MyPharmacy extends Model
         return $this->belongsToMany(Medication::class,'mypharmacy_medication','mypharmacy_id','medication_id');
     }
     
+
+    public function allterNatives(){
+        return $this->belongsToMany(AllterNative::class,'allter_native_pharmacys','mypharmacy_id','allter_native_id');
+    }
 
 }

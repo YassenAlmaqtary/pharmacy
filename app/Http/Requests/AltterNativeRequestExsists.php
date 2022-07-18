@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MedicationRequsetExsits extends FormRequest
+class AltterNativeRequestExsists extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,22 +24,17 @@ class MedicationRequsetExsits extends FormRequest
     public function rules()
     {
         return [
-          
                 'quntity'=>'required|Integer|min:1',
                 'price'=>'required|Integer|regex:/^\d+(\.\d{1,2})?$/',
                 'production_date' => 'required',
                 'expiry_date'=>'required|date|after:production_date',
-                'medication_id'=>'required',
-                'mypharmacy_id'=>'required',
-                
+                'allter_native_id'=>'required',
+
                
-            ];
-        
+        ];
     }
 
-
     public function messages(){
-
         return [
             'required'  => 'هذا الحقل مطلوب ',
             'min'=>'يجب ان يكون اقل كمية مدخلة =1',
@@ -47,5 +42,6 @@ class MedicationRequsetExsits extends FormRequest
             'after'=>'تاريخ الانتهاءيجب ان يكون بعد تاريخ الانتاج'
            
         ];
-    }
+    }  
+
 }
